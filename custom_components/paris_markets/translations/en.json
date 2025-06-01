@@ -1,0 +1,112 @@
+{
+    "config": {
+        "step": {
+            "user": {
+                "title": "Paris Markets",
+                "description": "Configure filtering method and market types.",
+                "data": {
+                    "filter_mode": "Filtering method",
+                    "radius_km": "Search radius (km)",
+                    "arrondissements": "Arrondissements",
+                    "product_types": "Market types to include"
+                },
+                "data_description": {
+                    "filter_mode": "Choose how to filter markets",
+                    "radius_km": "Distance from your Home Assistant location",
+                    "arrondissements": "Select specific Paris arrondissements",
+                    "product_types": "Select the types of markets you want to track"
+                }
+            }
+        },
+        "error": {
+            "no_home_location": "Home Assistant location not configured. Please set your location in Settings > System > General.",
+            "invalid_radius": "Invalid radius. Must be greater than 0.",
+            "no_arrondissements": "Please select at least one arrondissement.",
+            "no_product_types": "Please select at least one market type.",
+            "invalid_input_type": "Invalid input type. Please enter numerical values.",
+            "unknown": "Unknown error occurred."
+        },
+        "abort": {
+            "already_configured": "Paris Markets is already configured with this radius and market types."
+        }
+    },
+    "options": {
+        "step": {
+            "init": {
+                "title": "Paris Markets Options",
+                "description": "Configure scan interval and other options.",
+                "data": {
+                    "scan_interval_days": "Scan interval (days)"
+                },
+                "data_description": {
+                    "scan_interval_days": "How often to check for market updates (minimum 1 day)"
+                }
+            }
+        },
+        "error": {
+            "invalid_scan_interval": "Scan interval must be at least 1 day.",
+            "invalid_input_type": "Invalid input type. Please enter a number.",
+            "unknown": "Unknown error."
+        }
+    },
+    "selector": {
+        "filter_mode": {
+            "options": {
+                "radius": "Distance from home",
+                "arrondissement": "Specific arrondissements"
+            }
+        },
+        "arrondissements": {
+            "options": {
+                "1": "1st arrondissement",
+                "2": "2nd arrondissement",
+                "3": "3rd arrondissement",
+                "4": "4th arrondissement",
+                "5": "5th arrondissement",
+                "6": "6th arrondissement",
+                "7": "7th arrondissement",
+                "8": "8th arrondissement",
+                "9": "9th arrondissement",
+                "10": "10th arrondissement",
+                "11": "11th arrondissement",
+                "12": "12th arrondissement",
+                "13": "13th arrondissement",
+                "14": "14th arrondissement",
+                "15": "15th arrondissement",
+                "16": "16th arrondissement",
+                "17": "17th arrondissement",
+                "18": "18th arrondissement",
+                "19": "19th arrondissement",
+                "20": "20th arrondissement"
+            }
+        },
+        "product_types": {
+            "options": {
+                "Alimentaire": "Food markets",
+                "Alimentaire bio": "Organic food markets",
+                "Fleurs": "Flower markets",
+                "Oiseaux": "Bird markets",
+                "Timbres": "Stamp markets",
+                "Puces": "Flea markets",
+                "Brocante": "Antique markets",
+                "Création artistique": "Artistic creation markets"
+            }
+        }
+    },
+    "entity": {
+        "sensor": {
+            "market": {
+                "name": "Status of market {market_name}",
+                "state": {
+                    "open": "Open",
+                    "closed": "Closed"
+                }
+            }
+        },
+        "calendar": {
+            "market": {
+                "name": "Schedule for {market_name}"
+            }
+        }
+    }
+}

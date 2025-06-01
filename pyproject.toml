@@ -1,0 +1,68 @@
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+
+[project]
+name = "paris-markets"
+version = "1.0.0"
+description = "Home Assistant custom integration for Paris food markets"
+readme = "README.md"
+license = {file = "LICENSE"}
+authors = [
+    {name = "Benoît Taine", email = "benoit@taine.eu"},
+]
+classifiers = [
+    "Development Status :: 4 - Beta",
+    "Intended Audience :: End Users/Desktop",
+    "License :: OSI Approved :: MIT License",
+    "Operating System :: OS Independent",
+    "Programming Language :: Python :: 3.13",
+    "Topic :: Home Automation",
+]
+requires-python = ">=3.13.2"
+dependencies = [
+    "homeassistant>=2025.5.3",
+]
+
+[project.optional-dependencies]
+dev = [
+    "pytest>=7.4.0",
+    "pytest-homeassistant-custom-component>=0.13.0",
+    "pytest-asyncio>=0.21.0",
+    "pytest-cov>=4.0.0",
+    "pre-commit>=3.0.0",
+    "ruff>=0.1.0",
+    "mypy>=1.0.0",
+    "types-requests>=2.0.0"
+]
+
+[project.urls]
+Homepage = "https://github.com/ork/hass-paris-markets"
+Repository = "https://github.com/ork/hass-paris-markets"
+Issues = "https://github.com/ork/hass-paris-markets/issues"
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+norecursedirs = [".git", "testing_config"]
+asyncio_mode = "auto"
+addopts = "-v --tb=short"
+
+[tool.coverage.run]
+source = ["custom_components"]
+omit = ["tests/*"]
+
+[tool.ruff]
+target-version = "py313"
+
+[tool.mypy]
+python_version = "3.13"
+# Only check our specific module files
+files = ["custom_components/paris_markets/*.py"]
+# Don't follow any imports to avoid checking third-party code
+follow_imports = "skip"
+ignore_missing_imports = true
+# Basic warnings we want to keep
+warn_redundant_casts = true
+warn_unused_configs = true
+# Allow untyped definitions for flexibility
+disallow_untyped_defs = false

@@ -1,0 +1,19 @@
+{
+    "domain": "paris_markets",
+    "name": "Paris Markets",
+    "codeowners": [
+        "@ork"
+    ],
+    "config_flow": true,
+    "dependencies": [
+        "calendar"
+    ],
+    "documentation": "https://github.com/ork/hass-paris-markets",
+    "integration_type": "service",
+    "iot_class": "cloud_polling",
+    "issue_tracker": "https://github.com/ork/hass-paris-markets/issues",
+    "requirements": [
+        "requests"
+    ],
+    "version": "1.0.0"
+}

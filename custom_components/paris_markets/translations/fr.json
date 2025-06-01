@@ -1,0 +1,113 @@
+{
+    "title": "Marchés de Paris",
+    "config": {
+        "step": {
+            "user": {
+                "title": "Marchés de Paris",
+                "description": "Configurez la méthode de filtrage et les types de marchés.",
+                "data": {
+                    "filter_mode": "Méthode de filtrage",
+                    "radius_km": "Rayon de recherche (km)",
+                    "arrondissements": "Arrondissements",
+                    "product_types": "Types de marchés à inclure"
+                },
+                "data_description": {
+                    "filter_mode": "Choisissez comment filtrer les marchés",
+                    "radius_km": "Distance depuis votre localisation Home Assistant",
+                    "arrondissements": "Sélectionnez des arrondissements parisiens spécifiques",
+                    "product_types": "Sélectionnez les types de marchés que vous souhaitez suivre"
+                }
+            }
+        },
+        "error": {
+            "no_home_location": "Localisation de Home Assistant non configurée. Veuillez définir votre localisation dans Paramètres > Système > Général.",
+            "invalid_radius": "Rayon invalide. Doit être supérieur à 0.",
+            "no_arrondissements": "Veuillez sélectionner au moins un arrondissement.",
+            "no_product_types": "Veuillez sélectionner au moins un type de marché.",
+            "invalid_input_type": "Type de saisie invalide. Veuillez entrer des valeurs numériques.",
+            "unknown": "Erreur inconnue."
+        },
+        "abort": {
+            "already_configured": "Les Marchés de Paris sont déjà configurés avec ce rayon et ces types de marchés."
+        }
+    },
+    "options": {
+        "step": {
+            "init": {
+                "title": "Options des Marchés de Paris",
+                "description": "Configurez la fréquence de mise à jour et autres options.",
+                "data": {
+                    "scan_interval_days": "Intervalle de mise à jour (jours)"
+                },
+                "data_description": {
+                    "scan_interval_days": "Fréquence de vérification des mises à jour des marchés (minimum 1 jour)"
+                }
+            }
+        },
+        "error": {
+            "invalid_scan_interval": "L'intervalle de mise à jour doit être d'au moins 1 jour.",
+            "invalid_input_type": "Type de saisie invalide. Veuillez entrer un nombre.",
+            "unknown": "Erreur inconnue."
+        }
+    },
+    "selector": {
+        "filter_mode": {
+            "options": {
+                "radius": "Distance depuis le domicile",
+                "arrondissement": "Arrondissements spécifiques"
+            }
+        },
+        "arrondissements": {
+            "options": {
+                "1": "1er arrondissement",
+                "2": "2e arrondissement",
+                "3": "3e arrondissement",
+                "4": "4e arrondissement",
+                "5": "5e arrondissement",
+                "6": "6e arrondissement",
+                "7": "7e arrondissement",
+                "8": "8e arrondissement",
+                "9": "9e arrondissement",
+                "10": "10e arrondissement",
+                "11": "11e arrondissement",
+                "12": "12e arrondissement",
+                "13": "13e arrondissement",
+                "14": "14e arrondissement",
+                "15": "15e arrondissement",
+                "16": "16e arrondissement",
+                "17": "17e arrondissement",
+                "18": "18e arrondissement",
+                "19": "19e arrondissement",
+                "20": "20e arrondissement"
+            }
+        },
+        "product_types": {
+            "options": {
+                "Alimentaire": "Marchés alimentaires",
+                "Alimentaire bio": "Marchés alimentaires bio",
+                "Fleurs": "Marchés aux fleurs",
+                "Oiseaux": "Marchés aux oiseaux",
+                "Timbres": "Marchés aux timbres",
+                "Puces": "Marchés aux puces",
+                "Brocante": "Marchés de brocante",
+                "Création artistique": "Marchés de création artistique"
+            }
+        }
+    },
+    "entity": {
+        "sensor": {
+            "market": {
+                "name": "État du marché {market_name}",
+                "state": {
+                    "open": "Ouvert",
+                    "closed": "Fermé"
+                }
+            }
+        },
+        "calendar": {
+            "market": {
+                "name": "Calendrier du {market_name}"
+            }
+        }
+    }
+}
