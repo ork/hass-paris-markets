@@ -46,12 +46,12 @@ After installation, configure additional options:
 
 ## Entities
 
-### Sensors
-One sensor per market within your search radius, providing:
+### Binary Sensors
+One binary sensor per relevant market, providing:
 
 **State Values:**
-- `open`: Market is currently open
-- `closed`: Market is currently closed
+- `on`: Market is currently open
+- `off`: Market is currently closed
 
 **Attributes:**
 - `long_name`: Full market name
@@ -78,9 +78,8 @@ template:
   - sensor:
       - name: "Open Markets Count"
         state: >
-          {{ states.sensor 
-             | selectattr('entity_id', 'match', 'sensor.paris_markets_.*') 
-             | selectattr('state', 'eq', 'open') 
+          {{ expand('binary_sensor.paris_markets_*') 
+             | select('is_state', 'on') 
              | list | count }}
         unit_of_measurement: markets
 ```
@@ -96,9 +95,8 @@ template:
       data:
         title: "Markets Open Today"
         message: >
-          {% set open_markets = states.sensor 
-             | selectattr('entity_id', 'match', 'sensor.paris_markets_.*') 
-             | selectattr('state', 'eq', 'open') 
+          {% set open_markets = expand('binary_sensor.paris_markets_*') 
+             | select('is_state', 'on') 
              | map(attribute='attributes.long_name') 
              | list %}
           {{ open_markets | join(', ') if open_markets else 'No markets open today' }}

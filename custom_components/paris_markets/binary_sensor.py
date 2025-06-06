@@ -1,4 +1,4 @@
-"""Sensor platform for Paris Markets."""
+"""Binary sensor platform for Paris Markets."""
 
 from __future__ import annotations
 
@@ -7,7 +7,10 @@ from datetime import datetime
 from typing import Any
 from zoneinfo import ZoneInfo
 
-from homeassistant.components.sensor import SensorEntity, SensorEntityDescription
+from homeassistant.components.binary_sensor import (
+    BinarySensorEntity,
+    BinarySensorEntityDescription,
+)
 from homeassistant.config_entries import ConfigEntry
 from homeassistant.core import HomeAssistant, callback
 from homeassistant.helpers.entity_platform import AddEntitiesCallback
@@ -25,19 +28,21 @@ async def async_setup_entry(
     entry: ConfigEntry,
     async_add_entities: AddEntitiesCallback,
 ) -> None:
-    """Set up the Paris Markets sensors."""
+    """Set up the Paris Markets binary sensors."""
     coordinator: ParisMarketsDataUpdateCoordinator = hass.data[DOMAIN][entry.entry_id]
 
     entities = []
     if coordinator.data:
         for market_id in coordinator.data.keys():
-            entities.append(MarketSensor(coordinator, market_id))
+            entities.append(MarketBinarySensor(coordinator, market_id))
 
     async_add_entities(entities, True)
 
 
-class MarketSensor(CoordinatorEntity[ParisMarketsDataUpdateCoordinator], SensorEntity):
-    """Representation of a Paris Market sensor."""
+class MarketBinarySensor(
+    CoordinatorEntity[ParisMarketsDataUpdateCoordinator], BinarySensorEntity
+):
+    """Representation of a Paris Market binary sensor."""
 
     _attr_attribution = ATTRIBUTION
     _attr_has_entity_name = True
@@ -47,7 +52,7 @@ class MarketSensor(CoordinatorEntity[ParisMarketsDataUpdateCoordinator], SensorE
         coordinator: ParisMarketsDataUpdateCoordinator,
         market_id: str,
     ) -> None:
-        """Initialise the sensor."""
+        """Initialise the binary sensor."""
         super().__init__(coordinator)
         self.market_id = market_id
         self._market_data = self._get_market_data()
@@ -60,7 +65,7 @@ class MarketSensor(CoordinatorEntity[ParisMarketsDataUpdateCoordinator], SensorE
             short_name = self._market_data.short_name
 
         self._attr_translation_placeholders = {"market_name": short_name}
-        self.entity_description = SensorEntityDescription(
+        self.entity_description = BinarySensorEntityDescription(
             key=f"market_{self.market_id}",
             name=market_name,
             icon=DEFAULT_ICON,
@@ -73,8 +78,8 @@ class MarketSensor(CoordinatorEntity[ParisMarketsDataUpdateCoordinator], SensorE
         return MarketData.from_coordinator(self.coordinator, self.market_id)
 
     @property
-    def native_value(self) -> str | None:
-        """Return the state of the sensor."""
+    def is_on(self) -> bool | None:
+        """Return True if the market is open."""
         market_data = self._get_market_data()
         if not market_data:
             return None
@@ -86,13 +91,13 @@ class MarketSensor(CoordinatorEntity[ParisMarketsDataUpdateCoordinator], SensorE
         market_day_schedule = market_data.schedule[current_weekday]
 
         if not market_day_schedule.is_open():
-            return "closed"
+            return False
 
         start_time = market_day_schedule.start_time
         end_time = market_day_schedule.end_time
 
         if not start_time or not end_time:
-            return "closed"
+            return False
 
         is_open_now = (
             start_time.replace(tzinfo=None)
@@ -100,7 +105,7 @@ class MarketSensor(CoordinatorEntity[ParisMarketsDataUpdateCoordinator], SensorE
             <= end_time.replace(tzinfo=None)
         )
 
-        return "open" if is_open_now else "closed"
+        return is_open_now
 
     @property
     def extra_state_attributes(self) -> dict[str, Any] | None:
